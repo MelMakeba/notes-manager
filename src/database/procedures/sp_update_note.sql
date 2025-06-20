@@ -9,8 +9,7 @@ BEGIN
     UPDATE notes
     SET 
         title = p_title, 
-        content = p_content,
-        updated_at = NOW()
+        content = p_content
     WHERE id = p_id;
     
     GET DIAGNOSTICS updated_rows = ROW_COUNT;

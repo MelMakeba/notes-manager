@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION create_note(
     note_title TEXT,
     note_content TEXT
-) RETURNS TABLE (p_id UUID) AS $$
+) RETURNS UUID AS $$
 DECLARE
     new_id UUID;
 BEGIN
@@ -9,6 +9,6 @@ BEGIN
     VALUES (note_title, note_content)
     RETURNING id INTO new_id;
     
-    RETURN QUERY SELECT new_id;
+    RETURN new_id;
 END;
 $$ LANGUAGE plpgsql;

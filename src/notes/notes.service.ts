@@ -129,15 +129,18 @@ export class NotesService {
         content,
       ]);
 
+      // Check for boolean return value from PostgreSQL function
       if (
         !result.rows ||
         result.rows.length === 0 ||
-        !result.rows[0].p_updated
+        result.rows[0].update_note === false
       ) {
         throw new NotFoundException(
           `Note with ID ${id} not found or could not be updated`,
         );
       }
+
+      this.logger.log(`Successfully updated note with id: ${id}`); // Success log message
 
       return {
         id,
@@ -156,32 +159,16 @@ export class NotesService {
     }
   }
 
-  async remove(id: string): Promise<boolean> {
-    try {
-      this.logger.log(`Deleting note with id: ${id}`);
+  async remove(id: string): Promise<void> {
+    this.logger.log(`Deleting note with id: ${id}`);
 
-      const result = await this.connectionService.callProcedure('delete_note', [
-        id,
-      ]);
+    const result = await this.connectionService.callProcedure('delete_note', [
+      id,
+    ]);
 
-      if (
-        !result.rows ||
-        result.rows.length === 0 ||
-        !result.rows[0].p_deleted
-      ) {
-        throw new NotFoundException(
-          `Note with ID ${id} not found or could not be deleted`,
-        );
-      }
-
-      return true;
-    } catch (error) {
-      this.logger.error(`Error deleting note: ${error.message}`, error.stack);
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new InternalServerErrorException(
-        `Failed to delete note: ${error.message}`,
+    if (!result.rows[0] || result.rows[0].delete_note === false) {
+      throw new NotFoundException(
+        `Note with ID ${id} not found or could not be deleted`,
       );
     }
   }

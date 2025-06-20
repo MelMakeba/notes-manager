@@ -13,7 +13,7 @@ Content-Type: {{contentType}}
 }
 
 ###Store the ID from the created note for use in fetching data from the database.
-@noteId = {{createNote.request.body.data.id}}
+@noteId = e800fec1-d9a5-4244-8233-0fc7e446241a
 
 ###Get all notes
 # @name getAllNotes
@@ -34,8 +34,8 @@ PUT {{baseurl}}/notes/{{noteId}} HTTP/1.1
 Content-Type: {{contentType}}
 
 {
-    "title":"Updated Meeting Notes",
-    "conent": "Updated project timeline and deliverbles for Q3 AND Q4"
+    "title":"Updated always Meeting Notes",
+    "content": "Updated project line saok timeline and deliverbles for Q3 AND Q4"
 }
 
 ###Delete a note by ID

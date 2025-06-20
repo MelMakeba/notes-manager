@@ -14,11 +14,11 @@ export class ConnectionService implements OnModuleInit, OnModuleDestroy {
   private pool: Pool;
 
   private routineTypeMap: Record<string, 'FUNCTION' | 'PROCEDURE'> = {
-    create_note: 'PROCEDURE',
+    create_note: 'FUNCTION',
     get_all_notes: 'FUNCTION',
     get_note_by_id: 'FUNCTION',
-    update_note: 'PROCEDURE',
-    delete_note: 'PROCEDURE',
+    update_note: 'FUNCTION',
+    delete_note: 'FUNCTION',
   };
 
   constructor(private readonly dbConfig: DatabaseConfig) {}
